@@ -16,6 +16,7 @@ namespace VadimskyiLab.Utils
             if (source == null || source.IsDestroyed() || !source) return;
             source.color = new Color(source.color.r, source.color.g, source.color.b, a);
         }
+
         public static float GetAlpha(this Graphic source)
         {
             if (source == null || source.IsDestroyed() || !source) return 0;
