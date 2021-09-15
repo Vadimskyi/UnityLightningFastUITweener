@@ -1,20 +1,19 @@
 {
   "name": "com.vadimskyi.lightningfasttweeners",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "displayName": "Unity Lightning-Fast UI Tweener",
   "description": "Simple lightweight tweener library for fast and low-gc ui animation.",
   "unity": "2018.3",
   "documentationUrl": "https://example.com/",
   "changelogUrl": "https://example.com/changelog.html",
   "licensesUrl": "https://example.com/licensing.html",
-  "dependencies": {
- },
- "keywords": [
+  "dependencies": {},
+  "keywords": [
     "ui",
     "tween",
     "animation",
-	"simple",
-	"lightweight"
+    "simple",
+    "lightweight"
   ],
   "author": {
     "name": "Vadimskyi",
