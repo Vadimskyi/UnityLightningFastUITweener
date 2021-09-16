@@ -1,4 +1,6 @@
 # Unity Lightning Fast UI Tweener
+[![openupm](https://img.shields.io/npm/v/com.vadimskyi.lightningfasttweeners?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.vadimskyi.lightningfasttweeners/)
+
 Simple lightweight tweener library for fast, low-gc ui animation.
 ## Table of Contents
 
