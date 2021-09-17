@@ -8,18 +8,20 @@ using System;
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class TweenRemoteControl : ITweenRemoteControl
+    public sealed class TweenRemoteControl : ITweenRemoteControl
     {
-        private long _id;
-        private Action _onComplete;
-        private Action _onKill;
-
         public long Id => _id;
         public bool Completed { get; private set; }
 
-        public TweenRemoteControl()
+        private long _id;
+        private Action _onComplete;
+        private Action _onKill;
+        private ITweenComponentStrategy _strategy;
+
+        public TweenRemoteControl(ITweenComponentStrategy strategy)
         {
             _id = GenerateId();
+            _strategy = strategy;
         }
 
         public void OnComplete(Action callback)
@@ -32,8 +34,10 @@ namespace VadimskyiLab.UiExtension
             _onKill += callback;
         }
 
-        public void Kill()
+        public void Kill(bool resetToDefault = false)
         {
+            if (resetToDefault)
+                _strategy.ResetValueToDefault();
             _onKill?.Invoke();
         }
 

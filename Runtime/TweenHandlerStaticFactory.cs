@@ -107,7 +107,7 @@ namespace VadimskyiLab.UiExtension
                 orientation);
         }
 
-        private static ITweenPlayStyleStrategy CreatePlayStyle(ITweenSharedState state, TweenerPlayStyle style)
+        public static ITweenPlayStyleStrategy CreatePlayStyle(ITweenSharedState state, TweenerPlayStyle style)
         {
             switch (style)
             {

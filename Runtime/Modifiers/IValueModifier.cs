@@ -8,7 +8,7 @@ using System;
 
 namespace VadimskyiLab.UiExtension
 {
-    internal interface IValueModifier<T> : IDisposable
+    public interface IValueModifier<T> : IDisposable
     {
         float TimeElapsed();
         TweenSharedState<T> GetOptions();

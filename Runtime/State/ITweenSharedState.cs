@@ -12,6 +12,7 @@ namespace VadimskyiLab.UiExtension
         void SetDuration(float val);
         float GetDuration();
         int GetCycleCount();
+        void IncrementCycleCount();
         void Swap();
     }
 }

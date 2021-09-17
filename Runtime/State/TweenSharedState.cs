@@ -7,7 +7,7 @@
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class TweenSharedState<T> : ITweenSharedState
+    public sealed class TweenSharedState<T> : ITweenSharedState
     {
         public T FromValue;
         public T ToValue;
@@ -27,6 +27,11 @@ namespace VadimskyiLab.UiExtension
         public float GetDuration() => Duration;
 
         public int GetCycleCount() => CycleCount;
+
+        public void IncrementCycleCount()
+        {
+            CycleCount++;
+        }
 
         public void Swap()
         {

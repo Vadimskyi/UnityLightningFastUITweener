@@ -8,21 +8,25 @@ using UnityEngine;
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class TweenAnchoredPositionStrategy : ITweenComponentStrategy
+    public abstract class TransformStrategyBase<T> : ITweenComponentStrategy
     {
-        private RectTransform _target;
-        private TweenRemoteControl _remote;
-        private TweenComponentState _state;
-        private IValueModifier<Vector2> _mod;
-        private ITweenPlayStyleStrategy _style;
-        private TweenSharedState<Vector2> _sharedState;
+        protected Transform _target;
+        protected TweenRemoteControl _remote;
+        protected TweenComponentState _state;
+        protected IValueModifier<T> _mod;
+        protected ITweenPlayStyleStrategy _style;
+        protected ITweenSharedState _sharedState;
 
-        public TweenAnchoredPositionStrategy(RectTransform target, ITweenSharedState sharedSharedState, IValueModifier<Vector2> modHandler, ITweenPlayStyleStrategy style)
+        protected TransformStrategyBase(
+            Transform target, 
+            ITweenSharedState sharedSharedState, 
+            IValueModifier<T> modHandler, 
+            ITweenPlayStyleStrategy style)
         {
             _target = target;
             _mod = modHandler;
             _style = style;
-            _sharedState = (TweenSharedState<Vector2>)sharedSharedState;
+            _sharedState = sharedSharedState;
             _state = TweenComponentState.None;
             _remote = new TweenRemoteControl(this);
             _style.InitializeState();
@@ -31,11 +35,9 @@ namespace VadimskyiLab.UiExtension
 
         public void UpdateComponent(float deltaTime)
         {
-            _target.anchoredPosition = _mod.ModifyValue(deltaTime);
-            _state = TweenComponentState.Processing;
             if (CanComplete())
             {
-                _sharedState.CycleCount++;
+                _sharedState.IncrementCycleCount();
                 if (_style.CanComplete())
                 {
                     TweenCompleted();
@@ -44,18 +46,19 @@ namespace VadimskyiLab.UiExtension
                 _style.InitializeState();
                 _mod.Reset();
             }
+            OnValueUpdated(_mod.ModifyValue(deltaTime));
+            _state = TweenComponentState.Processing;
         }
+
+        public abstract void OnValueUpdated(T value);
 
         public object GetComponent() => _target;
 
         public ITweenPlayStyleStrategy GetPlayStyle() => _style;
 
-        public bool CanComplete() => _mod.TimeElapsed() >= _sharedState.Duration;
+        public bool CanComplete() => _mod.TimeElapsed() >= _sharedState.GetDuration();
 
-        public void ResetValueToDefault()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void ResetValueToDefault();
 
         public TweenComponentState GetState() => _state;
 

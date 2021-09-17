@@ -14,6 +14,6 @@ namespace VadimskyiLab.UiExtension
         bool Completed { get; }
         void OnComplete(Action callback);
         void OnKill(Action callback);
-        void Kill();
+        void Kill(bool resetToDefault = false);
     }
 }

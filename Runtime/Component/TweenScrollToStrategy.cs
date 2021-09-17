@@ -26,7 +26,7 @@ namespace VadimskyiLab.UiExtension
             _style = style;
             _sharedState = (TweenSharedState<float>)sharedState;
             _state = TweenComponentState.None;
-            _remote = new TweenRemoteControl();
+            _remote = new TweenRemoteControl(this);
             _style.InitializeState();
             SubscribeToRemote();
         }
@@ -54,6 +54,11 @@ namespace VadimskyiLab.UiExtension
         public ITweenPlayStyleStrategy GetPlayStyle() => _style;
 
         public bool CanComplete() => _mod.TimeElapsed() >= _sharedState.Duration;
+
+        public void ResetValueToDefault()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public TweenComponentState GetState() => _state;
 

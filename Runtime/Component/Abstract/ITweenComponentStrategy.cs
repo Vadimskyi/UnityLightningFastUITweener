@@ -16,6 +16,7 @@ namespace VadimskyiLab.UiExtension
         TweenComponentState GetState();
         ITweenRemoteControl GetRemote();
         bool CanComplete();
+        void ResetValueToDefault();
     }
 
     public enum TweenComponentState
