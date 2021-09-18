@@ -5,12 +5,13 @@
  * terms of the GPL-3.0 License.
  */
 using System;
+using Object = UnityEngine.Object;
 
 namespace VadimskyiLab.UiExtension
 {
     public interface ITweenComponentStrategy : IDisposable
     {
-        object GetComponent();
+        Object GetTargetComponent();
         ITweenPlayStyleStrategy GetPlayStyle();
         void UpdateComponent(float deltaTime);
         TweenComponentState GetState();

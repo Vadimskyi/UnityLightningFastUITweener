@@ -8,22 +8,22 @@ using UnityEngine;
 
 namespace VadimskyiLab.UiExtension
 {
-    public abstract class TransformStrategyBase<T> : ITweenComponentStrategy
+    public abstract class MonoStrategyBase<T> : ITweenComponentStrategy
     {
-        protected Transform _target;
+        protected Object _targetObject;
         protected TweenRemoteControl _remote;
         protected TweenComponentState _state;
         protected IValueModifier<T> _mod;
         protected ITweenPlayStyleStrategy _style;
         protected ITweenSharedState _sharedState;
 
-        protected TransformStrategyBase(
-            Transform target, 
+        protected MonoStrategyBase(
+            Object target, 
             ITweenSharedState sharedSharedState, 
             IValueModifier<T> modHandler, 
             ITweenPlayStyleStrategy style)
         {
-            _target = target;
+            _targetObject = target;
             _mod = modHandler;
             _style = style;
             _sharedState = sharedSharedState;
@@ -35,6 +35,8 @@ namespace VadimskyiLab.UiExtension
 
         public void UpdateComponent(float deltaTime)
         {
+            OnValueUpdated(_mod.ModifyValue(deltaTime));
+            _state = TweenComponentState.Processing;
             if (CanComplete())
             {
                 _sharedState.IncrementCycleCount();
@@ -46,13 +48,11 @@ namespace VadimskyiLab.UiExtension
                 _style.InitializeState();
                 _mod.Reset();
             }
-            OnValueUpdated(_mod.ModifyValue(deltaTime));
-            _state = TweenComponentState.Processing;
         }
 
         public abstract void OnValueUpdated(T value);
 
-        public object GetComponent() => _target;
+        public Object GetTargetComponent() => _targetObject;
 
         public ITweenPlayStyleStrategy GetPlayStyle() => _style;
 

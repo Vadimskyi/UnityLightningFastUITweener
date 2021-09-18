@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class FloatValueModifier : IValueModifier<float>
+    public sealed class FloatValueModifier : IValueModifier<float>
     {
         private float _timeFromStart;
         private TweenSharedState<float> _sharedState;

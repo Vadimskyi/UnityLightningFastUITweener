@@ -8,8 +8,9 @@ using UnityEngine;
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class TweenScaleStrategy : TransformStrategyBase<Vector2>
+    internal sealed class TweenScaleStrategy : MonoStrategyBase<Vector2>
     {
+        private Transform _target;
         private Vector2 _defaultValue;
 
         public TweenScaleStrategy(
@@ -18,6 +19,7 @@ namespace VadimskyiLab.UiExtension
             IValueModifier<Vector2> modHandler, 
             ITweenPlayStyleStrategy style) : base(target, sharedSharedState, modHandler, style)
         {
+            _target = target;
             _defaultValue = target.localScale;
         }
 

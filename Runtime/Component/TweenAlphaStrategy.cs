@@ -9,81 +9,29 @@ using VadimskyiLab.Utils;
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class TweenAlphaStrategy : ITweenComponentStrategy
+    internal sealed class TweenAlphaStrategy : MonoStrategyBase<float>
     {
         private Graphic _target;
-        private TweenRemoteControl _remote;
-        private TweenComponentState _state;
-        private IValueModifier<float> _mod;
-        private ITweenPlayStyleStrategy _style;
-        private TweenSharedState<float> _sharedState;
+        private float _defaultValue;
 
-        public TweenAlphaStrategy(Graphic target, ITweenSharedState sharedState, IValueModifier<float> modHandler, ITweenPlayStyleStrategy style)
+        public TweenAlphaStrategy(
+            Graphic target, 
+            ITweenSharedState sharedState, 
+            IValueModifier<float> modHandler, 
+            ITweenPlayStyleStrategy style) : base(target, sharedState, modHandler, style)
         {
             _target = target;
-            _mod = modHandler;
-            _style = style;
-            _sharedState = (TweenSharedState<float>)sharedState;
-            _state = TweenComponentState.None;
-            _remote = new TweenRemoteControl(this);
-            _style.InitializeState();
-            SubscribeToRemote();
+            _defaultValue = _target.color.a;
         }
 
-        public void UpdateComponent(float deltaTime)
+        public override void OnValueUpdated(float value)
         {
-            if (CanComplete())
-            {
-                _sharedState.CycleCount++;
-                if (_style.CanComplete())
-                {
-                    TweenCompleted();
-                    return;
-                }
-                _style.InitializeState();
-                _mod.Reset();
-            }
-            _target.SetAlpha(_mod.ModifyValue(deltaTime));
-            _state = TweenComponentState.Processing;
+            _target.SetAlpha(value);
         }
 
-        public object GetComponent() => _target;
-
-        public ITweenPlayStyleStrategy GetPlayStyle() => _style;
-
-        public bool CanComplete() => _mod.TimeElapsed() >= _sharedState.Duration;
-
-        public void ResetValueToDefault()
+        public override void ResetValueToDefault()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public TweenComponentState GetState() => _state;
-
-        public ITweenRemoteControl GetRemote() => _remote;
-
-        public void Dispose()
-        {
-            _mod?.Dispose();
-            _style?.Dispose();
-        }
-
-        private void Kill()
-        {
-            _state = TweenComponentState.Killed;
-            Dispose();
-        }
-
-        private void TweenCompleted()
-        {
-            _state = TweenComponentState.Completed;
-            _remote.Complete();
-            Dispose();
-        }
-
-        private void SubscribeToRemote()
-        {
-            _remote.OnKill(Kill);
+            _target.SetAlpha(_defaultValue);
         }
     }
 }

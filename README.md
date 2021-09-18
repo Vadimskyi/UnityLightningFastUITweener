@@ -70,7 +70,85 @@ You can easily cutomize or add your own tweeners. For more details check out [Cu
 
 ## Customization
 
-Lets add Transform.rotation tweener:
+Lets add Transform.localRotation tweener. First, create TweenRotationStrategy script:
+
+```csharp
+/// <summary>
+/// All functionality is described in abstract class MonoStrategyBase.
+/// MonoStrategyBase generic argument type is the type of the field we want to change (in this example, Quaternion is the type of Transform.localRotation field)
+/// </summary>
+public class TweenRotationStrategy : MonoStrategyBase<Quaternion>
+{
+    private Transform _target;
+    private Quaternion _defaultValue;
+    
+    /// <param name="target">Target object for tweening</param>
+    /// <param name="sharedState">Twinning value data (from, to, duration)</param>
+    /// <param name="modHandler">Value modifier handler. Handle value change over time.</param>
+    /// <param name="style">Tween style strategy</param>
+    public TweenRotationStrategy(
+        Transform target,
+        ITweenSharedState sharedState,
+        IValueModifier<Quaternion> modHandler,
+        ITweenPlayStyleStrategy style) : base(target, sharedState, modHandler, style)
+    {
+        _target = target;
+        _defaultValue = _target.localRotation;
+    }
+
+    /// <summary>
+    /// Every time value updated this method is being called.
+    /// We need to assign updated value to the target property.
+    /// </summary>
+    /// <param name="value">updated value</param>
+    public override void OnValueUpdated(Quaternion value)
+    {
+        _target.localRotation = value;
+    }
+
+    public override void ResetValueToDefault()
+    {
+        _target.localRotation = _defaultValue;
+    }
+}
+```
+
+After that, just create extension method for our new tweener:
+
+```csharp
+public static class TweenExtend
+{
+    public static ITweenRemoteControl TweenRotate2D(this Transform target, Vector3 toValue, float duration, TweenerPlayStyle style)
+    {
+        TweenSharedState<Quaternion> state = new TweenSharedState<Quaternion>()
+        {
+            FromValue = target.localRotation,
+            ToValue = Quaternion.Euler(toValue),
+            Duration = duration
+        };
+
+        var tween = new TweenRotationStrategy(
+            target,
+            state,
+            new QuaternionValueModifier(state),
+            TweenHandlerStaticFactory.CreatePlayStyle(state, style));
+
+        TweenUpdaterMono.Instance.Subscribe(tween);
+
+        return tween.GetRemote();
+    }
+}
+```
+And finally how to use it:
+
+```csharp
+private RectTransform _rectTransform;
+
+public void Use()
+{
+    _rectTransform.TweenRotate2D(_tweenDestination, _tweenDuration, TweenerPlayStyle.PingPong);
+}
+```
 
 ## Author Info
 

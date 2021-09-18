@@ -8,84 +8,51 @@ using UnityEngine.UI;
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class TweenScrollToStrategy : ITweenComponentStrategy
+    internal sealed class TweenScrollToStrategy : MonoStrategyBase<float>
     {
         private ScrollRect _target;
+        private float _defaultValue;
         private ScrollOrientation _orientation;
-        private TweenRemoteControl _remote;
-        private TweenComponentState _state;
-        private IValueModifier<float> _mod;
-        private ITweenPlayStyleStrategy _style;
-        private TweenSharedState<float> _sharedState;
 
-        public TweenScrollToStrategy(ScrollRect target, ITweenSharedState sharedState, IValueModifier<float> modHandler, ITweenPlayStyleStrategy style, ScrollOrientation orientation)
+        public TweenScrollToStrategy(
+            ScrollRect target, 
+            ITweenSharedState sharedState, 
+            IValueModifier<float> modHandler, 
+            ITweenPlayStyleStrategy style, 
+            ScrollOrientation orientation) : base(target, sharedState, modHandler, style)
         {
             _target = target;
             _orientation = orientation;
-            _mod = modHandler;
-            _style = style;
-            _sharedState = (TweenSharedState<float>)sharedState;
-            _state = TweenComponentState.None;
-            _remote = new TweenRemoteControl(this);
-            _style.InitializeState();
-            SubscribeToRemote();
+            _defaultValue = orientation == ScrollOrientation.Horizontal
+                ? target.horizontalNormalizedPosition
+                : target.verticalNormalizedPosition;
         }
+        
 
-        public void UpdateComponent(float deltaTime)
+        public override void OnValueUpdated(float value)
         {
-            if (CanComplete())
+            switch (_orientation)
             {
-                _sharedState.CycleCount++;
-                if (_style.CanComplete())
-                {
-                    TweenCompleted();
-                    return;
-                }
-                _style.InitializeState();
-                _mod.Reset();
+                case ScrollOrientation.Horizontal:
+                    _target.horizontalNormalizedPosition = value;
+                    break;
+                case ScrollOrientation.Vertical:
+                    _target.verticalNormalizedPosition = value;
+                    break;
             }
-
-            _target.horizontalNormalizedPosition = _mod.ModifyValue(deltaTime);
-            _state = TweenComponentState.Processing;
         }
 
-        public object GetComponent() => _target;
-
-        public ITweenPlayStyleStrategy GetPlayStyle() => _style;
-
-        public bool CanComplete() => _mod.TimeElapsed() >= _sharedState.Duration;
-
-        public void ResetValueToDefault()
+        public override void ResetValueToDefault()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public TweenComponentState GetState() => _state;
-
-        public ITweenRemoteControl GetRemote() => _remote;
-
-        public void Dispose()
-        {
-            _mod?.Dispose();
-            _style?.Dispose();
-        }
-
-        private void Kill()
-        {
-            _state = TweenComponentState.Killed;
-            Dispose();
-        }
-
-        private void TweenCompleted()
-        {
-            _state = TweenComponentState.Completed;
-            _remote.Complete();
-            Dispose();
-        }
-
-        private void SubscribeToRemote()
-        {
-            _remote.OnKill(Kill);
+            switch (_orientation)
+            {
+                case ScrollOrientation.Horizontal:
+                    _target.horizontalNormalizedPosition = _defaultValue;
+                    break;
+                case ScrollOrientation.Vertical:
+                    _target.verticalNormalizedPosition = _defaultValue;
+                    break;
+            }
         }
     }
 }

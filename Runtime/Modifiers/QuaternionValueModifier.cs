@@ -8,12 +8,12 @@ using UnityEngine;
 
 namespace VadimskyiLab.UiExtension
 {
-    public sealed class Vector2ValueModifier : IValueModifier<Vector2>
+    public sealed class QuaternionValueModifier : IValueModifier<Quaternion>
     {
         private float _timeFromStart;
-        private TweenSharedState<Vector2> _sharedState;
+        private TweenSharedState<Quaternion> _sharedState;
 
-        public Vector2ValueModifier(TweenSharedState<Vector2> sharedState)
+        public QuaternionValueModifier(TweenSharedState<Quaternion> sharedState)
         {
             _timeFromStart = 0;
             _sharedState = sharedState;
@@ -24,23 +24,22 @@ namespace VadimskyiLab.UiExtension
             return _timeFromStart;
         }
 
-        public TweenSharedState<Vector2> GetOptions() => _sharedState;
+        public TweenSharedState<Quaternion> GetOptions() => _sharedState;
 
-        public Vector2 GetStartingValue()
+        public Quaternion GetStartingValue()
         {
             return _sharedState.FromValue;
         }
 
-        public Vector2 GetDestinationValue()
+        public Quaternion GetDestinationValue()
         {
             return _sharedState.ToValue;
         }
 
-        public Vector2 ModifyValue(float deltaTime)
+        public Quaternion ModifyValue(float deltaTime)
         {
             _timeFromStart += deltaTime;
-
-            return Mathf.Approximately(_sharedState.Duration, 0) ? _sharedState.ToValue : Vector2.Lerp(_sharedState.FromValue, _sharedState.ToValue, _timeFromStart / _sharedState.Duration);
+            return Mathf.Approximately(_sharedState.Duration, 0) ? _sharedState.ToValue : Quaternion.Lerp(_sharedState.FromValue, _sharedState.ToValue, _timeFromStart / _sharedState.Duration);
         }
 
         public void Reset()
