@@ -5,18 +5,32 @@ Simple lightweight tweener library for fast, low-gc ui animation.
 ## Table of Contents
 
 - [Installation](#installation)
+    - [Unity Package](#unity-package)
+    - [UPM CLI](#upm-cli)
 - [Quick Start](#quick-start)
 - [Customization](#customization)
 - [Author Info](#author-info)
 
 ## Installation
+
 This library is distributed via Unity's built-in package manager. Required Unity 2018.3 or later.
 Sinse Unity's package manager does not support git-url dependencies you should install them manually, if required.
 
+### Unity Package
 - Open Unity project
-- Navigate to Window->Package Manager menu
-- Top left dropdown -> "Add package from git Url"
-- Paste https://github.com/Vadimskyi/UnityLightningFastUITweener.git
+- Download and run .unitypackage file from the latest release
+
+### UPM CLI
+- You need to have upm-cli installed: https://github.com/openupm/openupm-cli#openupm-cli
+- Open Git-Bash, CMD, or PowerShell for Windows console
+```console
+# go to the unity project folder
+$ cd ~/Document/projects/hello-openupm
+
+# add package
+$ openupm add com.vadimskyi.lightningfasttweeners
+```
+- Open Unity for package to be installed
 
 ## Quick Start
 
