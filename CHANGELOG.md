@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.1.0...v1.1.1) (2021-09-18)
+
+
+### Performance Improvements
+
+* internal api change for better customizability ([9e24755](https://github.com/Vadimskyi/UnityLightningFastUITweener/commit/9e247554c08a2e52ea772bd3920049bdeb718681))
+
 # [1.1.0](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.0.0...v1.1.0) (2021-09-17)
 
 
