@@ -14,7 +14,6 @@ Simple lightweight tweener library for fast, low-gc ui animation.
 ## Installation
 
 This library is distributed via Unity's built-in package manager. Required Unity 2018.3 or later.
-Sinse Unity's package manager does not support git-url dependencies you should install them manually, if required.
 
 ### Unity Package
 - Open Unity project
