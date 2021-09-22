@@ -134,18 +134,16 @@ public static class TweenExtend
 {
     public static ITweenRemoteControl TweenRotate2D(this Transform target, Vector3 toValue, float duration, TweenerPlayStyle style)
     {
-        TweenSharedState<Quaternion> state = new TweenSharedState<Quaternion>()
-        {
-            FromValue = target.localRotation,
-            ToValue = Quaternion.Euler(toValue),
-            Duration = duration
-        };
+        TweenQuaternionSharedState state = new TweenQuaternionSharedState(
+            target.localRotation.eulerAngles, 
+            toValue, 
+            duration);
 
         var tween = new TweenRotationStrategy(
             target,
             state,
             new QuaternionValueModifier(state),
-            TweenHandlerStaticFactory.CreatePlayStyle(state, style));
+            CreatePlayStyle(state, style));
 
         TweenUpdaterMono.Instance.Subscribe(tween);
 
