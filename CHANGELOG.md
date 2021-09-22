@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.1.1...v1.2.0) (2021-09-22)
+
+
+### Features
+
+* added Loop play style ([3d3d5a6](https://github.com/Vadimskyi/UnityLightningFastUITweener/commit/3d3d5a6292907400e25e1b03a5b010e806cf0132))
+
 ## [1.1.1](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.1.0...v1.1.1) (2021-09-18)
 
 
