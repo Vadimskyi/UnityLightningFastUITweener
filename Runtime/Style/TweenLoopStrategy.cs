@@ -7,31 +7,34 @@
 
 namespace VadimskyiLab.UiExtension
 {
-    internal sealed class TweenPingPongStrategy : ITweenPlayStyleStrategy
+    internal sealed class TweenLoopStrategy : ITweenPlayStyleStrategy
     {
         private TweenerPlayStyle _style;
         private ITweenSharedState _state;
 
-        public TweenPingPongStrategy(ITweenSharedState sharedState)
+        public TweenLoopStrategy(ITweenSharedState sharedState)
         {
-            _style = TweenerPlayStyle.PingPong;
+            _style = TweenerPlayStyle.Loop;
             _state = sharedState;
         }
 
         public void InitializeState()
         {
-            _state.SetDuration(_state.GetDuration() / 2);
+            if (_state.GetCycleCount() == 0)
+                _state.SetDuration(_state.GetDuration() / 2);
+            else
+                SwapInitialParams();
         }
 
         public void UpdateCycle()
         {
-            if (_state.GetCycleCount() == 0) return;
-            SwapInitialParams();
+            if (CanComplete()) return;
         }
 
         public bool CanComplete()
         {
-            return _state.GetCycleCount() > 1;
+            var max = _state.GetMaxLoops();
+            return max != -1 && _state.GetCycleCount() >= max;
         }
 
         public TweenerPlayStyle GetPlayStyle()
@@ -54,4 +57,3 @@ namespace VadimskyiLab.UiExtension
         }
     }
 }
-

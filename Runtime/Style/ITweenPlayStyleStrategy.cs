@@ -11,6 +11,7 @@ namespace VadimskyiLab.UiExtension
     public interface ITweenPlayStyleStrategy : IDisposable
     {
         void InitializeState();
+        void UpdateCycle();
         bool CanComplete();
         TweenerPlayStyle GetPlayStyle();
         void Update(float deltaTime);

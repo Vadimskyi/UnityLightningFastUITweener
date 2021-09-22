@@ -15,12 +15,7 @@ namespace VadimskyiLab.UiExtension
     {
         public static ITweenRemoteControl TweenMove2D(this RectTransform target, Vector2 toValue, float duration, TweenerPlayStyle style)
         {
-            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>()
-            {
-                FromValue = target.localPosition,
-                ToValue = toValue,
-                Duration = duration
-            };
+            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>(target.localPosition, toValue, duration);
 
             var tween =  new TweenLocalPositionStrategy(
                 target,
@@ -33,12 +28,7 @@ namespace VadimskyiLab.UiExtension
 
         public static ITweenRemoteControl TweenMoveAnchored2D(this RectTransform target, Vector2 toValue, float duration, TweenerPlayStyle style)
         {
-            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>()
-            {
-                FromValue = target.anchoredPosition,
-                ToValue = toValue,
-                Duration = duration
-            };
+            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>(target.anchoredPosition, toValue, duration);
             var tween = new TweenAnchoredPositionStrategy(
                 target,
                 state,
@@ -50,12 +40,7 @@ namespace VadimskyiLab.UiExtension
 
         public static ITweenRemoteControl TweenSizeDelta2D(this RectTransform target, Vector2 toValue, float duration, TweenerPlayStyle style)
         {
-            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>()
-            {
-                FromValue = target.sizeDelta,
-                ToValue = toValue,
-                Duration = duration
-            };
+            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>(target.sizeDelta, toValue, duration);
             var tween = new TweenSizeDeltaStrategy(
                 target,
                 state,
@@ -67,12 +52,7 @@ namespace VadimskyiLab.UiExtension
 
         public static ITweenRemoteControl TweenScale2D(this RectTransform target, Vector2 toValue, float duration, TweenerPlayStyle style)
         {
-            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>()
-            {
-                FromValue = target.localScale,
-                ToValue = toValue,
-                Duration = duration
-            };
+            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>(target.localScale, toValue, duration);
             var tween = new TweenScaleStrategy(
                 target,
                 state,
@@ -84,12 +64,7 @@ namespace VadimskyiLab.UiExtension
 
         public static ITweenRemoteControl TweenScale2D(this Transform target, Vector2 toValue, float duration, TweenerPlayStyle style)
         {
-            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>()
-            {
-                FromValue = target.localScale,
-                ToValue = toValue,
-                Duration = duration
-            };
+            TweenSharedState<Vector2> state = new TweenSharedState<Vector2>(target.localScale, toValue, duration);
             var tween = new TweenScaleStrategy(
                 target,
                 state,
@@ -101,12 +76,7 @@ namespace VadimskyiLab.UiExtension
 
         public static ITweenRemoteControl TweenAlpha(this Graphic target, float toValue, float duration, TweenerPlayStyle style)
         {
-            TweenSharedState<float> state = new TweenSharedState<float>()
-            {
-                FromValue = target.GetAlpha(),
-                ToValue = toValue,
-                Duration = duration
-            };
+            TweenSharedState<float> state = new TweenSharedState<float>(target.GetAlpha(), toValue, duration);
             var tween = new TweenAlphaStrategy(
                 target,
                 state,
@@ -121,12 +91,7 @@ namespace VadimskyiLab.UiExtension
             var value = direction == ScrollOrientation.Horizontal
                 ? scrollRect.horizontalNormalizedPosition
                 : scrollRect.verticalNormalizedPosition;
-            TweenSharedState<float> state = new TweenSharedState<float>()
-            {
-                FromValue = value,
-                ToValue = toValue,
-                Duration = duration
-            };
+            TweenSharedState<float> state = new TweenSharedState<float>(value, toValue, duration);
             var tween = new TweenScrollToStrategy(
                 scrollRect,
                 state,
@@ -139,18 +104,16 @@ namespace VadimskyiLab.UiExtension
 
         public static ITweenRemoteControl TweenRotate2D(this Transform target, Vector3 toValue, float duration, TweenerPlayStyle style)
         {
-            TweenSharedState<Quaternion> state = new TweenSharedState<Quaternion>()
-            {
-                FromValue = target.localRotation,
-                ToValue = Quaternion.Euler(toValue),
-                Duration = duration
-            };
+            TweenQuaternionSharedState state = new TweenQuaternionSharedState(
+                target.localRotation.eulerAngles, 
+                toValue, 
+                duration);
 
             var tween = new TweenRotationStrategy(
                 target,
                 state,
                 new QuaternionValueModifier(state),
-                TweenHandlerStaticFactory.CreatePlayStyle(state, style));
+                CreatePlayStyle(state, style));
 
             TweenUpdaterMono.Instance.Subscribe(tween);
 
@@ -163,6 +126,7 @@ namespace VadimskyiLab.UiExtension
             {
                 case TweenerPlayStyle.PingPong: return new TweenPingPongStrategy(state);
                 case TweenerPlayStyle.Once: return new TweenOnceStrategy(state);
+                case TweenerPlayStyle.Loop: return new TweenLoopStrategy(state);
             }
 
             throw new NotImplementedException($"Tween play-style \"{style}\" is not implemented!");

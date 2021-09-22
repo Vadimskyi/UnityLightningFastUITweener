@@ -4,6 +4,8 @@
  * You may use, distribute and modify this code under the
  * terms of the GPL-3.0 License.
  */
+
+using System;
 using UnityEngine;
 
 namespace VadimskyiLab.UiExtension
@@ -11,9 +13,9 @@ namespace VadimskyiLab.UiExtension
     public sealed class QuaternionValueModifier : IValueModifier<Quaternion>
     {
         private float _timeFromStart;
-        private TweenSharedState<Quaternion> _sharedState;
+        private TweenQuaternionSharedState _sharedState;
 
-        public QuaternionValueModifier(TweenSharedState<Quaternion> sharedState)
+        public QuaternionValueModifier(TweenQuaternionSharedState sharedState)
         {
             _timeFromStart = 0;
             _sharedState = sharedState;
@@ -28,18 +30,33 @@ namespace VadimskyiLab.UiExtension
 
         public Quaternion GetStartingValue()
         {
-            return _sharedState.FromValue;
+            return Quaternion.Euler(_sharedState.FromValue);
         }
 
         public Quaternion GetDestinationValue()
         {
-            return _sharedState.ToValue;
+            return Quaternion.Euler(_sharedState.ToValue);
         }
 
         public Quaternion ModifyValue(float deltaTime)
         {
+            float fromAngle = _sharedState.FromValue.z;
+            Vector3 fromAxis;
+            var normalizedFromAxis = _sharedState.FromValue.normalized;
+            fromAxis = new Vector3(Math.Abs(normalizedFromAxis.x), Math.Abs(normalizedFromAxis.y), Math.Abs(normalizedFromAxis.z));
+
+            float toAngle = _sharedState.ToValue.z; 
+            Vector3 toAxis;
+            var normalizedToAxis = _sharedState.ToValue.normalized;
+            toAxis = new Vector3(Math.Abs(normalizedToAxis.x), Math.Abs(normalizedToAxis.y), Math.Abs(normalizedToAxis.z));
+
             _timeFromStart += deltaTime;
-            return Mathf.Approximately(_sharedState.Duration, 0) ? _sharedState.ToValue : Quaternion.Lerp(_sharedState.FromValue, _sharedState.ToValue, _timeFromStart / _sharedState.Duration);
+
+            var progress = _timeFromStart / _sharedState.Duration;
+            float currentAngle = Mathf.Lerp(fromAngle, toAngle, progress);
+            Vector3 currentAxis = Vector3.Slerp(fromAxis, toAxis, progress);
+
+            return Mathf.Approximately(_sharedState.Duration, 0) ? Quaternion.Euler(_sharedState.ToValue) : Quaternion.AngleAxis(currentAngle, currentAxis);
         }
 
         public void Reset()

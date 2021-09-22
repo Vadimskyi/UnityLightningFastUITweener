@@ -12,8 +12,9 @@ namespace VadimskyiLab.UiExtension
     {
         long Id { get; }
         bool Completed { get; }
-        void OnComplete(Action callback);
-        void OnKill(Action callback);
+        ITweenRemoteControl SetLoops(int loops);
+        ITweenRemoteControl OnComplete(Action callback);
+        ITweenRemoteControl OnKill(Action callback);
         void Kill(bool resetToDefault = false);
     }
 }

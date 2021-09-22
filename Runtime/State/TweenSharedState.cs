@@ -7,16 +7,23 @@
 
 namespace VadimskyiLab.UiExtension
 {
-    public sealed class TweenSharedState<T> : ITweenSharedState
+    public class TweenSharedState<T> : ITweenSharedState
     {
         public T FromValue;
         public T ToValue;
+        public T CurrentValue;
         public float Duration;
         public int CycleCount;
+        public int MaxLoops;
 
-        public TweenSharedState()
+        public TweenSharedState(T fromValue, T toValue, float duration)
         {
+            FromValue = fromValue;
+            CurrentValue = fromValue;
+            ToValue = toValue;
+            Duration = duration;
             CycleCount = 0;
+            MaxLoops = 1;
         }
 
         public void SetDuration(float val)
@@ -24,16 +31,23 @@ namespace VadimskyiLab.UiExtension
             Duration = val;
         }
 
+        public void SetLoops(int count)
+        {
+            MaxLoops = count;
+        }
+
         public float GetDuration() => Duration;
 
         public int GetCycleCount() => CycleCount;
+
+        public int GetMaxLoops() => MaxLoops;
 
         public void IncrementCycleCount()
         {
             CycleCount++;
         }
 
-        public void Swap()
+        public virtual void Swap()
         {
             var tmp = FromValue;
             FromValue = ToValue;

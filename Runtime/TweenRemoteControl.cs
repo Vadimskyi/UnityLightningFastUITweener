@@ -24,14 +24,22 @@ namespace VadimskyiLab.UiExtension
             _strategy = strategy;
         }
 
-        public void OnComplete(Action callback)
+        public ITweenRemoteControl SetLoops(int loops)
         {
-            _onComplete += callback;
+            _strategy.GetSharedStateData().SetLoops(loops);
+            return this;
         }
 
-        public void OnKill(Action callback)
+        public ITweenRemoteControl OnComplete(Action callback)
+        {
+            _onComplete += callback;
+            return this;
+        }
+
+        public ITweenRemoteControl OnKill(Action callback)
         {
             _onKill += callback;
+            return this;
         }
 
         public void Kill(bool resetToDefault = false)

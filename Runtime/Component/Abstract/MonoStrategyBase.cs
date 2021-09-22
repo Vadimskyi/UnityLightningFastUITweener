@@ -18,7 +18,7 @@ namespace VadimskyiLab.UiExtension
         protected ITweenSharedState _sharedState;
 
         protected MonoStrategyBase(
-            Object target, 
+            Object target,
             ITweenSharedState sharedSharedState, 
             IValueModifier<T> modHandler, 
             ITweenPlayStyleStrategy style)
@@ -45,7 +45,7 @@ namespace VadimskyiLab.UiExtension
                     TweenCompleted();
                     return;
                 }
-                _style.InitializeState();
+                _style.UpdateCycle();
                 _mod.Reset();
             }
         }
@@ -61,6 +61,8 @@ namespace VadimskyiLab.UiExtension
         public abstract void ResetValueToDefault();
 
         public TweenComponentState GetState() => _state;
+
+        public ITweenSharedState GetSharedStateData() => _sharedState;
 
         public ITweenRemoteControl GetRemote() => _remote;
 

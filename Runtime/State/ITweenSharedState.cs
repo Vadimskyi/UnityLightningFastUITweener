@@ -10,9 +10,12 @@ namespace VadimskyiLab.UiExtension
     public interface ITweenSharedState
     {
         void SetDuration(float val);
-        float GetDuration();
-        int GetCycleCount();
+        void SetLoops(int count);
         void IncrementCycleCount();
         void Swap();
+
+        float GetDuration();
+        int GetCycleCount();
+        int GetMaxLoops();
     }
 }

@@ -23,6 +23,11 @@ namespace VadimskyiLab.UiExtension
 
         }
 
+        public void UpdateCycle()
+        {
+            
+        }
+
         public bool CanComplete()
         {
             return _state.GetCycleCount() > 0;

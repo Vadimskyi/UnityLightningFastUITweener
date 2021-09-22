@@ -15,6 +15,7 @@ namespace VadimskyiLab.UiExtension
         ITweenPlayStyleStrategy GetPlayStyle();
         void UpdateComponent(float deltaTime);
         TweenComponentState GetState();
+        ITweenSharedState GetSharedStateData();
         ITweenRemoteControl GetRemote();
         bool CanComplete();
         void ResetValueToDefault();
