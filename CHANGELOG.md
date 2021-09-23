@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.2.0...v1.2.1) (2021-09-23)
+
+
+### Bug Fixes
+
+* fixed undefined behaviour with multiple Kill calls ([7e86dc2](https://github.com/Vadimskyi/UnityLightningFastUITweener/commit/7e86dc23a88ccde13d6051d9ac145c6c3d472fbf))
+
 # [1.2.0](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.1.1...v1.2.0) (2021-09-22)
 
 
