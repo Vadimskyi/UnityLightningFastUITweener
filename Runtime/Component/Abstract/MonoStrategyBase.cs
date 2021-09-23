@@ -17,6 +17,8 @@ namespace VadimskyiLab.UiExtension
         protected ITweenPlayStyleStrategy _style;
         protected ITweenSharedState _sharedState;
 
+        private bool _isDisposed;
+
         protected MonoStrategyBase(
             Object target,
             ITweenSharedState sharedSharedState, 
@@ -35,6 +37,7 @@ namespace VadimskyiLab.UiExtension
 
         public void UpdateComponent(float deltaTime)
         {
+            if(_isDisposed) return;
             OnValueUpdated(_mod.ModifyValue(deltaTime));
             _state = TweenComponentState.Processing;
             if (CanComplete())
@@ -70,10 +73,12 @@ namespace VadimskyiLab.UiExtension
         {
             _mod?.Dispose();
             _style?.Dispose();
+            _isDisposed = true;
         }
 
         private void Kill()
         {
+            if (_isDisposed) return;
             _state = TweenComponentState.Killed;
             Dispose();
         }
