@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.2.1...v1.2.2) (2021-09-25)
+
+
+### Bug Fixes
+
+* ITweenRemoteControl.OnKill callbackcan only be called once ([2c9351f](https://github.com/Vadimskyi/UnityLightningFastUITweener/commit/2c9351f39773d0e15f6bf90a761efa0d424798e4))
+
 ## [1.2.1](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.2.0...v1.2.1) (2021-09-23)
 
 
