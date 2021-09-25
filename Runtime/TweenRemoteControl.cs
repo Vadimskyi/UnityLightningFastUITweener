@@ -14,6 +14,7 @@ namespace VadimskyiLab.UiExtension
         public bool Completed { get; private set; }
 
         private long _id;
+        private bool _isKilled;
         private Action _onComplete;
         private Action _onKill;
         private ITweenComponentStrategy _strategy;
@@ -44,13 +45,17 @@ namespace VadimskyiLab.UiExtension
 
         public void Kill(bool resetToDefault = false)
         {
+            if (_isKilled) return;
             if (resetToDefault)
                 _strategy.ResetValueToDefault();
             _onKill?.Invoke();
+            _onKill = null;
+            _isKilled = true;
         }
 
         public void Complete()
         {
+            if(_isKilled) return;
             _onComplete?.Invoke();
             Completed = true;
         }
