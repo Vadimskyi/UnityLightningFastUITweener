@@ -31,7 +31,8 @@ namespace VadimskyiLab.UiExtension
 
         public bool CanComplete()
         {
-            return _state.GetCycleCount() > 1;
+            var max = _state.GetMaxLoops();
+            return max != -1 && _state.GetCycleCount() >= (max * 2);
         }
 
         public TweenerPlayStyle GetPlayStyle()
