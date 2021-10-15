@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.2.2...v1.2.3) (2021-10-15)
+
+
+### Bug Fixes
+
+* fixed SetLoops for PingPong play style. ([7649c95](https://github.com/Vadimskyi/UnityLightningFastUITweener/commit/7649c957c5fa6672620b76e5ede53170c675c3e5))
+
 ## [1.2.2](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.2.1...v1.2.2) (2021-09-25)
 
 
