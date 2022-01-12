@@ -4,6 +4,8 @@
  * You may use, distribute and modify this code under the
  * terms of the GPL-3.0 License.
  */
+
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace VadimskyiLab.UiExtension
@@ -76,6 +78,7 @@ namespace VadimskyiLab.UiExtension
             _isDisposed = true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected bool IsTargetValid() => _targetObject && _targetObject != null;
 
         private void Kill()
