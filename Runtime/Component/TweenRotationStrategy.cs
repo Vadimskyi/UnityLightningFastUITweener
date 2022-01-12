@@ -38,11 +38,13 @@ namespace VadimskyiLab.UiExtension
         /// <param name="value">updated value</param>
         public override void OnValueUpdated(Quaternion value)
         {
+            if (!IsTargetValid()) return;
             _target.localRotation = value;
         }
 
         public override void ResetValueToDefault()
         {
+            if (!IsTargetValid()) return;
             _target.localRotation = _defaultValue;
         }
     }

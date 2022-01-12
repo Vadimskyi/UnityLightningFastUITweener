@@ -25,11 +25,13 @@ namespace VadimskyiLab.UiExtension
 
         public override void OnValueUpdated(Vector2 value)
         {
+            if (!IsTargetValid()) return;
             _target.anchoredPosition = value;
         }
 
         public override void ResetValueToDefault()
         {
+            if (!IsTargetValid()) return;
             _target.anchoredPosition = _defaultValue;
         }
     }

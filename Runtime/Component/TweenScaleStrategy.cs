@@ -25,11 +25,13 @@ namespace VadimskyiLab.UiExtension
 
         public override void OnValueUpdated(Vector2 value)
         {
+            if (!IsTargetValid()) return;
             _target.localScale = new Vector3(value.x, value.y, _target.localScale.z);
         }
 
         public override void ResetValueToDefault()
         {
+            if (!IsTargetValid()) return;
             _target.localScale = _defaultValue;
         }
     }

@@ -26,11 +26,13 @@ namespace VadimskyiLab.UiExtension
 
         public override void OnValueUpdated(float value)
         {
+            if (!IsTargetValid()) return;
             _target.SetAlpha(value);
         }
 
         public override void ResetValueToDefault()
         {
+            if (!IsTargetValid()) return;
             _target.SetAlpha(_defaultValue);
         }
     }

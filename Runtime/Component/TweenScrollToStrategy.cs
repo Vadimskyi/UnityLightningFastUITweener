@@ -31,6 +31,7 @@ namespace VadimskyiLab.UiExtension
 
         public override void OnValueUpdated(float value)
         {
+            if (!IsTargetValid()) return;
             switch (_orientation)
             {
                 case ScrollOrientation.Horizontal:
@@ -44,6 +45,7 @@ namespace VadimskyiLab.UiExtension
 
         public override void ResetValueToDefault()
         {
+            if (!IsTargetValid()) return;
             switch (_orientation)
             {
                 case ScrollOrientation.Horizontal:

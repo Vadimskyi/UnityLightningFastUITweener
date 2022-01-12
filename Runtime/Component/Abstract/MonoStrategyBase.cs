@@ -76,6 +76,8 @@ namespace VadimskyiLab.UiExtension
             _isDisposed = true;
         }
 
+        protected bool IsTargetValid() => _targetObject && _targetObject != null;
+
         private void Kill()
         {
             if (_isDisposed) return;
