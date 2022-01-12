@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.2.3...v1.2.4) (2022-01-12)
+
+
+### Bug Fixes
+
+* added check for target null values ([98ccf4d](https://github.com/Vadimskyi/UnityLightningFastUITweener/commit/98ccf4dc6e31267f2b39b145e247f1c2a3a86fb1))
+
 ## [1.2.3](https://github.com/Vadimskyi/UnityLightningFastUITweener/compare/v1.2.2...v1.2.3) (2021-10-15)
 
 
